@@ -63,5 +63,3 @@ number means higher status).
 ## Stack
 
 Python · pandas · NumPy · matplotlib · seaborn · Jupyter
-
----
