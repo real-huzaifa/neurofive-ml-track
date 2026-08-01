@@ -1,4 +1,4 @@
-# Week 2: Titanic Survival Prediction - Classification
+# Week 3: Model Evaluation And Tuning - Beyond Accuracy
 
 Takes the raw Titanic dataset through the full classification workflow — cleaning,
 exploratory analysis, a baseline logistic regression model, per-class evaluation
@@ -154,7 +154,7 @@ Python · pandas · NumPy · matplotlib · seaborn · scikit-learn · Jupyter
 
 ---
 
-# Week 3: Telco Customer Churn - Model Comparison
+# Week 3: Customer Churn Prediction - Working With A Business Problem
 
 Takes the IBM Telco Customer Churn dataset through cleaning, EDA, and a head-to-head
 comparison of two classifiers — Decision Tree vs Logistic Regression — with feature
