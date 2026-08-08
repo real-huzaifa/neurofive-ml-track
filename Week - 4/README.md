@@ -156,8 +156,6 @@ more weight onto geography, while Random Forest concentrates more on `MedInc`. T
 boosting works — later trees chase the residuals earlier trees missed, and location is exactly
 the kind of interaction effect that surfaces in what income alone cannot explain.
 
-![Feature Importance](Feature Importance Plot.png)
-
 ---
 
 ### How Random Forest and XGBoost differ in combining models
