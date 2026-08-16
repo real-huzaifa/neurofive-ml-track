@@ -1,26 +1,13 @@
-# Neurofive ML Track
-
-Two applied machine learning assignments: handling severe class imbalance, and deploying a
-trained model as a live web app.
+## Week - 5: Handling Imbalanced And Messy Real World Data
 
 ---
-
-## 🚀 Live Demo
-
-**[California Housing Price Predictor →](https://calfornia-housing-prediction.streamlit.app/)**
-
-Interactive Streamlit app serving a trained gradient boosting model. Pick a California city,
-adjust the block group's income, age, and household details, and get a predicted median house
-value.
-
----
-
-## Task 1 — Handling Class Imbalance
 
 **Dataset:** Credit Card Fraud (284,807 transactions, 31 columns)
 
 Detecting fraud in a severely imbalanced dataset, and demonstrating why accuracy is the wrong
 metric for the job.
+
+---
 
 ### Class balance
 
@@ -33,7 +20,7 @@ train/test split would leak and inflate scores.
 The distribution is plotted on both a linear and a log scale — on a linear axis the fraud bar
 is effectively invisible, which is itself a useful illustration of the problem.
 
-![Class Distribution](class_balance.png)
+---
 
 ### Techniques applied
 
@@ -48,6 +35,8 @@ Three approaches to the imbalance, all compared against an untouched baseline:
 Resampling was applied to the **training set only**. Running SMOTE before the split would place
 synthetic frauds — interpolated from real ones — into the test set, making the scores fiction.
 
+---
+
 ### Results
 
 80/20 stratified split · 95 frauds in the test set · logistic regression throughout
@@ -60,7 +49,7 @@ synthetic frauds — interpolated from real ones — into the test set, making t
 | SMOTE | 0.9737 | 0.053 | **0.874** | 0.100 | 0.675 | 83 | 1482 | 12 |
 | Random undersampling | 0.9722 | 0.050 | **0.874** | 0.095 | 0.590 | 83 | 1563 | 12 |
 
-![Precision / Recall / F1](metrics_comparison.png)
+---
 
 ### Before and after
 
@@ -69,6 +58,8 @@ All three techniques did exactly what they are designed to do: **recall rose fro
 
 But **precision collapsed from 0.846 to roughly 0.05**, and F1 fell from 0.688 to about 0.10.
 False positives went from 10 to over 1,400.
+
+---
 
 ### Why F1 dropped — the threshold, not the model
 
@@ -97,6 +88,8 @@ customer. At 1,400 false positives per 56,746 transactions a review team would d
 baseline's 10 is operationally sane but misses 40 frauds. A real deployment would tune the
 threshold to the team's actual review capacity — which the table above makes possible.
 
+---
+
 ### Why "accuracy" would have been a misleading metric
 
 Only 0.167% of transactions in this dataset are fraudulent — 473 out of 283,726. A model that
@@ -120,11 +113,21 @@ false alarm — and accuracy answers neither question.
 
 ---
 
-## Task 2 — Model Deployment
+## Week - 5: Deploy Your Model As A Live Web App
+
+Interactive Streamlit app serving a trained gradient boosting model. Pick a California city,
+adjust the block group's income, age, and household details, and get a predicted median house
+value.
+
+---
+
+## 🚀 Live Demo
 
 **[Live app →](https://calfornia-housing-prediction.streamlit.app/)**
 
 Taking the best-performing model from an earlier task and serving it as an interactive web app.
+
+---
 
 ### The model
 
@@ -139,12 +142,16 @@ groups, 8 features, target = median house value in $100,000s):
 
 XGBoost was the best performer and the natural candidate to deploy.
 
+---
+
 ### What the app does
 
 - Select a California city (which sets latitude/longitude), or enter coordinates manually
 - Adjust median income, house age, average rooms, bedrooms, occupancy, and population
 - Click **Predict** for an estimated median house value
 - Warns the user when a prediction hits the dataset's $500,001 ceiling
+
+---
 
 ### Deployment stack
 
@@ -159,6 +166,8 @@ joblib.dump({
     "metrics": {"RMSE": ..., "MAE": ..., "R2": ...},
 }, "housing_model.joblib")
 ```
+
+---
 
 ### Three problems solved during deployment
 
@@ -177,6 +186,8 @@ internal module paths that scikit-learn moves between releases. A mismatch produ
 `ModuleNotFoundError: No module named '_loss'` at load time. The version pin is part of the
 artifact, not an optimisation.
 
+---
+
 ### Data limitation surfaced in the app
 
 The original 1990 survey capped median house value at $500,001, so 992 rows (4.8%) sit at that
@@ -185,40 +196,7 @@ like "$499,847", the app tells the user the prediction is a floor.
 
 ---
 
-## Repository structure
-
-```
-neurofive-ml-track/
-├── Week-N/
-│   └── creditcard_imbalance.ipynb            # Task 1
-└── Week-5/
-    ├── Model_For_App_Deployment.ipynb        # Task 2 — training + model export
-    └── calfornia-housing-app/
-        ├── app.py                            # Streamlit app
-        ├── requirements.txt
-        └── housing_model.joblib              # Deployed model
-```
-
-> Adjust the week folder and filename for Task 1 to match your actual layout.
-
 ## Tools
 
 Python · pandas · NumPy · scikit-learn · XGBoost · imbalanced-learn · Matplotlib · joblib ·
 Streamlit
-
-## Running locally
-
-```bash
-pip install pandas numpy scikit-learn xgboost imbalanced-learn matplotlib joblib streamlit
-```
-
-Notebooks run top to bottom. The California Housing notebook downloads its dataset
-automatically via `fetch_california_housing()`; the credit card notebook expects
-`creditcard.csv` alongside it.
-
-To run the app locally:
-
-```bash
-cd Week-5/calfornia-housing-app
-streamlit run app.py
-```
