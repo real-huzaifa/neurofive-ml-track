@@ -3,7 +3,7 @@
 Predicting how a game will be received on Steam — using only the decisions a developer makes
 **before** launch.
 
-**[▶ Try the live app](https://your-app.streamlit.app)**
+**[▶ Try the live app](https://steam-game-reception-predictor.streamlit.app/)**
 
 ---
 
